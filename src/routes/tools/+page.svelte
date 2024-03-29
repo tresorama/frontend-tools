@@ -9,11 +9,10 @@
 
 <div class="text-column">
 	<h1>All Tools</h1>
-
 	<ul>
 		{#each tools as tool}
 			<li>
-				<a href={`/${tool.slug}`}>{tool.slug}</a>
+				<a href={`/tools/${tool.slug}`}>{tool.slug}</a>
 			</li>
 		{/each}
 	</ul>
