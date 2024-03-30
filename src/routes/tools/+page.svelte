@@ -1,5 +1,8 @@
-<script>
-	const tools = [{ slug: 'json-to-css-custom-properties' }];
+<script lang="ts">
+	const tools: { slug: string }[] = [
+		{ slug: 'json-to-css-custom-properties' },
+		{ slug: 'tailwind-color-scale-generator' }
+	];
 </script>
 
 <svelte:head>
@@ -12,7 +15,9 @@
 	<ul>
 		{#each tools as tool}
 			<li>
-				<a href={`/tools/${tool.slug}`}>{tool.slug}</a>
+				<article>
+					<a href={`/tools/${tool.slug}`}>{tool.slug}</a>
+				</article>
 			</li>
 		{/each}
 	</ul>

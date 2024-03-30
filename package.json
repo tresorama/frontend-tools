@@ -12,7 +12,8 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"postinstall": "cd tailwindcss-palette-generator && npm install && npm run tresorama:build"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -39,6 +40,8 @@
 	"dependencies": {
 		"@fontsource/ibm-plex-mono": "^5.0.8",
 		"css-vars-from-json": "^1.1.0",
-		"svelte-monaco": "^0.3.0"
+		"svelte-monaco": "^0.3.0",
+		"tailwind-shades": "^1.1.2",
+		"tailwindcss-palette-generator": "file:tailwindcss-palette-generator"
 	}
 }

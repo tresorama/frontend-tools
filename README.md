@@ -1,4 +1,14 @@
-# create-svelte
+# Note
+
+Questa repo ha un submodule "tailwindcss-palette-generator".  
+QUsto submodule è una fork di https://github.com/bobthered/tailwindcss-palette-generator che non funziona nel browser.  
+Quindo ho forkato, aggijnto tsup e caricato come git submodule in questa repo.
+
+Ho messo un `postintall` script cosi da compilare il modulo forkato.
+
+---
+
+## create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
