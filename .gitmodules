@@ -1,0 +1,4 @@
+[submodule "tailwindcss-palette-generator"]
+	path = tailwindcss-palette-generator
+	url = https://github.com/tresorama/tailwindcss-palette-generator.git
+	branch = feat/compile-with-tsup
