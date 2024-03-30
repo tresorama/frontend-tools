@@ -35,7 +35,15 @@
 	}
 </script>
 
-<h1>json-to-css-custom-properties</h1>
+<svelte:head>
+	<title>JSON to CSS Custom Properties</title>
+	<meta
+		name="description"
+		content="Online tool to convert JSON to CSS Custom Properties (CSS Variables). Ready to Copy Paste."
+	/>
+</svelte:head>
+
+<h1>JSON to CSS Custom Properties</h1>
 
 <div class="layout">
 	<div class="editor-wrapper source">

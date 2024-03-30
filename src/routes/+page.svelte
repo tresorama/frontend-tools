@@ -4,8 +4,8 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Frontend Tools</title>
+	<meta name="description" content="Colleciton of online tools for Web Developers" />
 </svelte:head>
 
 <section>
@@ -17,12 +17,9 @@
 			</picture>
 		</span>
 
-		to your new<br />SvelteKit app
+		Explore the
+		<br /><a href="/tools"> tools collection!</a>
 	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
 </section>
 
 <style>

@@ -48,7 +48,14 @@
 	onMount(handleFormChange);
 </script>
 
-<h1>tailwind-color-scale-generator</h1>
+<svelte:head>
+	<title>Tailwind Color Scale Generator</title>
+	<meta
+		name="description"
+		content="Online tool to generate a Tailwind Color Scale from a base color. Ready to Copy Paste."
+	/>
+</svelte:head>
+<h1>Tailwind Color Scale Generator</h1>
 
 <main class="layout">
 	<section class="left-side">
@@ -59,13 +66,17 @@
 				<input name="colorName" id="colorName" type="text" value="primary" />
 			</div>
 			<div>
-				<input name="inputColor" id="inputColor" type="color" />
 				<label for="inputColor">Input Color</label>
+				<input name="inputColor" id="inputColor" type="color" value="#ff3e00" />
 			</div>
 			<div>
 				<input name="inputAt500" id="inputAt500" type="checkbox" />
 				<label for="inputAt500">Place Input color at 500</label>
-				<span>If enabled your color must be ideal for being at the center of the scale.</span>
+				<span>
+					If <strong>enabled</strong> your color must be ideal for being at the center of the scale.
+					Othrwise you get a un-even distributed scale. If <strong>disabled</strong> input color will
+					be placed automatically based on lightness, this produce always a balanced scale.
+				</span>
 			</div>
 			<div>
 				<input name="createDefault" id="createDefault" type="checkbox" />
@@ -83,9 +94,9 @@
 		{#if generatedScale}
 			<div class="color-swatches">
 				{#each Object.entries(generatedScale) as [key, value]}
-					<div class="color-swatch">
+					<div class="color-swatch" style:--color={value}>
 						<span class="color-swatch__label">{key}</span>
-						<span class="color-swatch__box" style:--color={value}></span>
+						<span class="color-swatch__box"></span>
 					</div>
 				{/each}
 			</div>
@@ -93,15 +104,17 @@
 
 		<!-- Code Editor Output -->
 		{#if editorText}
-			<Monaco
-				options={{
-					language: 'json',
-					automaticLayout: true,
-					readOnly: true
-				}}
-				theme="vs-dark"
-				value={editorText}
-			/>
+			<div class="editor-wrapper">
+				<Monaco
+					options={{
+						language: 'json',
+						automaticLayout: true,
+						readOnly: true
+					}}
+					theme="vs-dark"
+					value={editorText}
+				/>
+			</div>
 		{/if}
 	</section>
 </main>
@@ -129,6 +142,8 @@
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		gap: 1rem;
+		color: var(--neutral-900);
+
 		@media (min-width: 55rem) {
 			grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
 		}
@@ -148,13 +163,15 @@
 		background-color: var(--neutral-50);
 		border-radius: var(--border-radius);
 
+		// Field wrapper
 		> div:has(input) {
 			display: grid;
 			align-items: center;
 			gap: 5px;
 		}
 
-		> div:has(input[type='checkbox'], input[type='color']) {
+		// Field wrapper when checkbox or color
+		> div:has(input[type='checkbox']) {
 			display: grid;
 			gap: 5px;
 			grid-template-columns: auto 1fr;
@@ -163,19 +180,22 @@
 			}
 		}
 
+		// Field label
 		label {
-			font-weight: 700;
-			font-size: 0.8rem;
-			line-height: 1;
-			opacity: 0.8;
+			font-weight: 900;
+			font-size: 0.7rem;
+			line-height: 1.35;
+			color: var(--neutral-800);
 		}
 
+		// Field helper text
 		span {
 			font-size: 0.7rem;
 			font-style: italic;
-			opacity: 0.5;
+			color: var(--neutral-400);
 		}
 
+		// Field input
 		input[type='text'] {
 			display: block;
 			padding: 0.5em;
@@ -195,11 +215,15 @@
 		gap: 10px;
 
 		.color-swatch {
+			/* Public Prop */
+			--color: transparent;
+
 			&__label {
 				display: block;
 				font-size: 0.7rem;
 				font-weight: 700;
-				opacity: 0.5;
+				color: var(--neutral-600);
+				line-height: 1.75;
 			}
 			&__box {
 				display: block;
@@ -212,5 +236,14 @@
 
 	.debug {
 		margin: 0;
+		color: var(--neutral-400);
+		background-color: var(--neutral-50);
+	}
+
+	.editor-wrapper {
+		height: 100%;
+		min-height: 30rem;
+		border-radius: var(--border-radius);
+		overflow: hidden;
 	}
 </style>

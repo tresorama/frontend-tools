@@ -1,21 +1,38 @@
+<script lang="ts">
+	const links: { url: string; label: string }[] = [
+		{ url: 'https://jacopomarrone.com', label: 'Personal Website' },
+		{ url: 'https://github.com/tresorama', label: 'Github' },
+		{ url: 'https://codepen.io/tresorama', label: 'Codepen' },
+		{ url: 'mailto:jacopo.marrone27@gmail.com', label: 'Email' }
+	];
+</script>
+
 <svelte:head>
 	<title>About</title>
-	<meta name="description" content="About this app" />
+	<meta name="description" content="About me" />
 </svelte:head>
 
 <div class="text-column">
-	<h1>About this app</h1>
+	<h1>About</h1>
 
 	<p>
-		This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the
-		following into your command line and following the prompts:
+		Created by <a href="https://github.com/tresorama">Jacopo Marrone</a>.
 	</p>
 
-	<pre>npm create svelte@latest</pre>
-
-	<p>
-		The page you're looking at is purely static HTML, with no client-side interactivity needed.
-		Because of that, we don't need to load any JavaScript. Try viewing the page's source, or opening
-		the devtools network panel and reloading.
-	</p>
+	<ul>
+		{#each links as link}
+			<li>
+				<a href={link.url}>{link.label}</a>
+			</li>
+		{/each}
+	</ul>
 </div>
+
+<style lang="scss">
+	ul {
+		list-style-type: circle;
+		li {
+			margin-bottom: 0.5em;
+		}
+	}
+</style>
