@@ -1,7 +1,8 @@
 <script lang="ts">
 	const tools: { slug: string }[] = [
 		{ slug: 'json-to-css-custom-properties' },
-		{ slug: 'tailwind-color-scale-generator' }
+		{ slug: 'tailwind-color-scale-generator' },
+		{ slug: 'css-color-palette-editor' }
 	];
 </script>
 
