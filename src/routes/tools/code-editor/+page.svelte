@@ -72,19 +72,16 @@
 		</div>
 	</div>
 	<div class="editor-wrapper">
-		<!-- Force rerender when language changes -->
-		{#key language_slug}
-			<!-- event.detail is the monaco instance. All options are reactive! -->
-			<Monaco
-				options={{
-					language: language_slug,
-					automaticLayout: true
-				}}
-				{theme}
-				on:ready={(event) => console.log(event.detail)}
-				bind:value={editorValue}
-			/>
-		{/key}
+		<!-- event.detail is the monaco instance. All options are reactive! -->
+		<Monaco
+			options={{
+				language: language_slug,
+				automaticLayout: true
+			}}
+			{theme}
+			on:ready={(event) => console.log(event.detail)}
+			bind:value={editorValue}
+		/>
 	</div>
 </div>
 
