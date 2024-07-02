@@ -1,7 +1,11 @@
 <script lang="ts">
 	import Monaco from 'svelte-monaco';
 
-	let editorValue = `:root {
+	// Presets
+	type PresetSlug = (typeof presetsSlugs)[number];
+	const presetsSlugs = ['1', '2'] as const;
+	const presetsStartingText: Record<PresetSlug, string> = {
+		'1': `:root {
   --sl--color-surface-hue: 183;
   --sl--color-surface-sat: 100%;
   
@@ -41,7 +45,36 @@
   --sl--color-surface-900--L: hsl(var(--sl--color-surface-hue), var(--sl--color-surface-sat), 8.6%);
   --sl--color-surface-950--L: hsl(var(--sl--color-surface-hue), var(--sl--color-surface-sat), 4.7%);
 
-}`;
+}`,
+		'2': `:root {
+  --st--color-primary-50: var(--tw--color-indigo-50); 
+  --st--color-primary-100: var(--tw--color-indigo-100); 
+  --st--color-primary-200: var(--tw--color-indigo-200); 
+  --st--color-primary-300: var(--tw--color-indigo-300); 
+  --st--color-primary-400: var(--tw--color-indigo-400); 
+  --st--color-primary-500: var(--tw--color-indigo-500); 
+  --st--color-primary-600: var(--tw--color-indigo-600); 
+  --st--color-primary-700: var(--tw--color-indigo-700); 
+  --st--color-primary-800: var(--tw--color-indigo-800); 
+  --st--color-primary-900: var(--tw--color-indigo-900); 
+  --st--color-primary-950: var(--tw--color-indigo-950); 
+
+  --st--color-secondary-50: var(--tw--color-yellow-50); 
+  --st--color-secondary-100: var(--tw--color-yellow-100); 
+  --st--color-secondary-200: var(--tw--color-yellow-200); 
+  --st--color-secondary-300: var(--tw--color-yellow-300); 
+  --st--color-secondary-400: var(--tw--color-yellow-400); 
+  --st--color-secondary-500: var(--tw--color-yellow-500); 
+  --st--color-secondary-600: var(--tw--color-yellow-600); 
+  --st--color-secondary-700: var(--tw--color-yellow-700); 
+  --st--color-secondary-800: var(--tw--color-yellow-800); 
+  --st--color-secondary-900: var(--tw--color-yellow-900); 
+  --st--color-secondary-950: var(--tw--color-yellow-950); 
+}`
+	};
+
+	let presetSlug: PresetSlug = presetsSlugs[0];
+	$: editorValue = presetsStartingText[presetSlug];
 </script>
 
 <svelte:head>
@@ -55,6 +88,16 @@
 <h1>CSS Color Palette Editor</h1>
 
 <div class="layout">
+	<div class="editor-toolbar">
+		<div class="editor-preset-selector">
+			<label for="editor-preset">Preset</label>
+			<select id="editor-preset" bind:value={presetSlug}>
+				{#each presetsSlugs as slug}
+					<option value={slug}>{slug}</option>
+				{/each}
+			</select>
+		</div>
+	</div>
 	<div class="editor-wrapper dest">
 		<!-- event.detail is the monaco instance. All options are reactive! -->
 		<Monaco
@@ -78,10 +121,22 @@
 		margin-right: auto;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
-		grid-auto-rows: 33vh;
 		gap: 2rem;
+	}
+	.editor-wrapper {
+		height: 33vh;
 		@media (min-width: 55rem) {
-			grid-auto-rows: 75vh;
+			height: 75vh;
+		}
+	}
+	.editor-toolbar {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+
+		> * {
+			display: flex;
+			flex-direction: column;
 		}
 	}
 </style>
