@@ -1,11 +1,14 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Monaco, { nativeThemes } from 'svelte-monaco';
 
-	// Text value that is being edited
-	let editorValue = ``;
+	// types
+	type Language = { slug: string; label: string };
+	type Theme = string;
+	type Preset = { id: string; name: string; code: string; language: Language['slug'] };
 
-	// Editor language
-	const languages: { slug: string; label: string }[] = [
+	// constants
+	const languages: Language[] = [
 		{ slug: 'plaintext', label: 'Plain Text' },
 		{ slug: 'javascript', label: 'JavaScript' },
 		{ slug: 'typescript', label: 'TypeScript' },
@@ -32,11 +35,74 @@
 		{ slug: 'sql', label: 'SQL' },
 		{ slug: 'yaml', label: 'YAML' }
 	];
-	let language_slug = languages[0].slug;
+	const themes: Theme[] = nativeThemes;
+	const deafultPresets: Preset[] = [
+		{
+			id: 'default',
+			name: 'Default (cannot be deleted)',
+			code: '// preset default',
+			language: 'javascript'
+		}
+	];
 
-	// Editor theme
-	const themes = nativeThemes;
-	let theme: (typeof themes)[number] = themes[1];
+	// local state
+	let languageSlug = 'javascript';
+	let theme = 'vs-dark';
+	let text = 'hey';
+	let userPresets: Preset[] = [];
+	let presets = [...deafultPresets];
+	$: presets = [...deafultPresets, ...userPresets];
+	let presetId = presets[0].id;
+
+	// actions
+	function handlePresetChange(newPresetId: string) {
+		const newPreset = presets.find((preset) => preset.id === newPresetId);
+		if (!newPreset) return;
+		text = newPreset.code;
+		languageSlug = newPreset.language;
+	}
+
+	const userPresetsStorage = {
+		key: 'code-editor--user-presets',
+		read() {
+			return JSON.parse(localStorage.getItem(this.key) || '[]') as Preset[];
+		},
+		write(presets: Preset[]) {
+			localStorage.setItem(this.key, JSON.stringify(presets));
+		},
+		delete() {
+			localStorage.removeItem(this.key);
+		}
+	};
+	function handleDeleteAllUserPresets() {
+		// ask for confirmation
+		const userIsSure = confirm('Are you sure you want to delete all presets?');
+		if (!userIsSure) return;
+		// delete all user presets
+		userPresets = [];
+		userPresetsStorage.delete();
+	}
+	function handleCreateUserPreset() {
+		// create new user preset
+		const name = prompt(`Preset name:`);
+		if (!name) return;
+		const newPreset: Preset = {
+			id: crypto.randomUUID(),
+			name,
+			code: text,
+			language: languageSlug
+		};
+		// save new user preset
+		userPresets = [...userPresets, newPreset];
+		userPresetsStorage.write(userPresets);
+		// set as active
+		presetId = newPreset.id;
+	}
+	function loadPresetsFromLocalStorage() {
+		// get user preset from local storage
+		userPresets = userPresetsStorage.read();
+	}
+	onMount(loadPresetsFromLocalStorage);
 </script>
 
 <svelte:head>
@@ -51,18 +117,38 @@
 
 <div class="layout">
 	<!-- <div class="debug">
-		<span>Language: {language_slug}</span>
+		<pre>{JSON.stringify({ languageSlug, theme, text, presetId }, null, 2)}</pre>
 	</div> -->
+
 	<div class="editor-toolbar">
-		<div class="editor-language-selector">
+		<div class="control editor-preset-selector">
+			<label for="editor-preset">Preset</label>
+			<select
+				id="editor-preset"
+				value={presetId}
+				on:change={(e) => handlePresetChange(e.currentTarget.value)}
+			>
+				{#each presets as preset}
+					<option value={preset.id}>{preset.name}</option>
+				{/each}
+			</select>
+		</div>
+		<div class="editor-preset-actions">
+			<button on:click={handleCreateUserPreset}>Save current settings as preset</button>
+			<button on:click={handleDeleteAllUserPresets}>Delete all presets</button>
+		</div>
+	</div>
+
+	<div class="editor-toolbar">
+		<div class="control editor-language-selector">
 			<label for="editor-language">Language</label>
-			<select id="editor-language" bind:value={language_slug}>
+			<select id="editor-language" bind:value={languageSlug}>
 				{#each languages as language}
 					<option value={language.slug}>{language.label}</option>
 				{/each}
 			</select>
 		</div>
-		<div class="editor-theme-selector">
+		<div class="control editor-theme-selector">
 			<label for="editor-theme">Theme</label>
 			<select name="editor-theme" bind:value={theme}>
 				{#each themes as theme_slug}
@@ -71,21 +157,27 @@
 			</select>
 		</div>
 	</div>
+
 	<div class="editor-wrapper">
-		<!-- event.detail is the monaco instance. All options are reactive! -->
 		<Monaco
 			options={{
-				language: language_slug,
+				language: languageSlug,
 				automaticLayout: true
 			}}
 			{theme}
-			on:ready={(event) => console.log(event.detail)}
-			bind:value={editorValue}
+			bind:value={text}
+			on:ready={(event) => {
+				// event.detail is the monaco instance. All options are reactive!
+				console.log('ready', event.detail);
+			}}
 		/>
 	</div>
 </div>
 
 <style lang="scss">
+	.debug {
+		display: block;
+	}
 	.layout {
 		width: 100%;
 		max-width: 1300px;
@@ -104,11 +196,28 @@
 	.editor-toolbar {
 		display: flex;
 		flex-direction: row;
+		align-items: flex-end;
 		gap: 1rem;
 
-		> * {
+		.control {
 			display: flex;
 			flex-direction: column;
+			gap: 0.2rem;
+
+			input,
+			select {
+				padding: 0.25rem;
+			}
+		}
+		.editor-preset-actions {
+			display: flex;
+			flex-direction: row;
+			gap: 1rem;
+
+			button {
+				padding: 0.25rem 0.5rem;
+				font-size: 0.8rem;
+			}
 		}
 	}
 </style>
