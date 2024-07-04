@@ -2,15 +2,15 @@
 	import { page } from '$app/stores';
 	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
+	import HeaderAuth from './header-auth.svelte';
 
 	let menuIsOpen = false;
-	
-	const navItems = [
-		{url: "/", label: "Home"},
-		{url: "/about", label: "about"},
-		{url: "/tools", label: "tools"},
-	];
 
+	const navItems = [
+		{ url: '/', label: 'Home' },
+		{ url: '/about', label: 'about' },
+		{ url: '/tools', label: 'tools' }
+	];
 </script>
 
 <header>
@@ -25,50 +25,51 @@
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
 		</svg>
 		<ul>
-		{#each navItems as item, i}
-			<li aria-current={$page.url.pathname === item.url ? 'page' : undefined}>
-				<a href={item.url}>{item.label}</a>
-			</li>
-	  {/each}
+			{#each navItems as item, i}
+				<li aria-current={$page.url.pathname === item.url ? 'page' : undefined}>
+					<a href={item.url}>{item.label}</a>
+				</li>
+			{/each}
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
 		</svg>
 	</nav>
 
-	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
-		</a>
+	<div class="corner auth">
+		<HeaderAuth />
 	</div>
 </header>
 
-<style>
+<style lang="scss">
 	header {
+		position: relative;
+		padding: 0 1rem;
 		display: flex;
 		justify-content: space-between;
 	}
 
 	.corner {
-		width: 3em;
 		height: 3em;
-	}
 
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
+		a {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+		}
+		img {
+			width: 2em;
+			height: 2em;
+			object-fit: contain;
+		}
 	}
 
 	nav {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
 		display: flex;
 		justify-content: center;
 		--background: rgba(255, 255, 255, 0.7);
@@ -123,7 +124,6 @@
 		font-weight: 700;
 		font-size: 0.8rem;
 		text-transform: uppercase;
-		letter-spacing: 0.1em;
 		text-decoration: none;
 		transition: color 0.2s linear;
 	}
