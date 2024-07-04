@@ -42,6 +42,7 @@
 		"@fontsource/ibm-plex-mono": "^5.0.8",
 		"css-vars-from-json": "^1.1.0",
 		"svelte-monaco": "^0.4.0",
+		"svelte-sonner": "^0.3.24",
 		"tailwind-shades": "^1.1.2",
 		"tailwindcss-palette-generator": "file:tailwindcss-palette-generator"
 	}
