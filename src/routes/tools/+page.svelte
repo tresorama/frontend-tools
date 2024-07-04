@@ -29,7 +29,6 @@
 	ul {
 		li {
 			margin-bottom: 0.5em;
-			letter-spacing: 0.02em;
 			font-size: 1.3rem;
 		}
 	}
