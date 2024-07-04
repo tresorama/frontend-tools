@@ -1,11 +1,14 @@
-<script lang="ts">
-	import { onMount } from 'svelte';
-	import Monaco, { nativeThemes } from 'svelte-monaco';
-
+<script context="module" lang="ts">
 	// types
 	type Language = { slug: string; label: string };
 	type Theme = string;
-	type Preset = { id: string; name: string; code: string; language: Language['slug'] };
+	export type Preset = { id: string; name: string; code: string; language: Language['slug'] };
+</script>
+
+<script lang="ts">
+	import { writable } from 'svelte/store';
+	import Monaco, { nativeThemes } from 'svelte-monaco';
+	import { globalSettings } from '../../global-settings.store';
 
 	// constants
 	const languages: Language[] = [
@@ -49,60 +52,43 @@
 	let languageSlug = 'javascript';
 	let theme = 'vs-dark';
 	let text = 'hey';
-	let userPresets: Preset[] = [];
+	$: userPresets = $globalSettings.settings['code-editor'].userPresets;
 	let presets = [...deafultPresets];
 	$: presets = [...deafultPresets, ...userPresets];
-	let presetId = presets[0].id;
+	const presetId = writable(presets[0].id);
 
 	// actions
 	function handlePresetChange(newPresetId: string) {
 		const newPreset = presets.find((preset) => preset.id === newPresetId);
 		if (!newPreset) return;
+
 		text = newPreset.code;
 		languageSlug = newPreset.language;
+		presetId.set(newPresetId);
 	}
 
-	const userPresetsStorage = {
-		key: 'code-editor--user-presets',
-		read() {
-			return JSON.parse(localStorage.getItem(this.key) || '[]') as Preset[];
-		},
-		write(presets: Preset[]) {
-			localStorage.setItem(this.key, JSON.stringify(presets));
-		},
-		delete() {
-			localStorage.removeItem(this.key);
-		}
-	};
 	function handleDeleteAllUserPresets() {
 		// ask for confirmation
 		const userIsSure = confirm('Are you sure you want to delete all presets?');
 		if (!userIsSure) return;
 		// delete all user presets
-		userPresets = [];
-		userPresetsStorage.delete();
+		globalSettings.codeEditor.deleteAllUserPresets();
+		// set default as active
+		handlePresetChange(deafultPresets[0].id);
 	}
 	function handleCreateUserPreset() {
 		// create new user preset
 		const name = prompt(`Preset name:`);
 		if (!name) return;
-		const newPreset: Preset = {
-			id: crypto.randomUUID(),
+		// save new user preset
+		const newPreset = globalSettings.codeEditor.createUserPreset({
 			name,
 			code: text,
 			language: languageSlug
-		};
-		// save new user preset
-		userPresets = [...userPresets, newPreset];
-		userPresetsStorage.write(userPresets);
+		});
 		// set as active
-		presetId = newPreset.id;
+		handlePresetChange(newPreset.id);
 	}
-	function loadPresetsFromLocalStorage() {
-		// get user preset from local storage
-		userPresets = userPresetsStorage.read();
-	}
-	onMount(loadPresetsFromLocalStorage);
 </script>
 
 <svelte:head>
@@ -116,16 +102,16 @@
 <h1>Code Editor - Monaco Editor - VS Code Like</h1>
 
 <div class="layout">
-	<!-- <div class="debug">
+	<div class="debug">
 		<pre>{JSON.stringify({ languageSlug, theme, text, presetId }, null, 2)}</pre>
-	</div> -->
+	</div>
 
 	<div class="editor-toolbar">
 		<div class="control editor-preset-selector">
 			<label for="editor-preset">Preset</label>
 			<select
 				id="editor-preset"
-				value={presetId}
+				value={$presetId}
 				on:change={(e) => handlePresetChange(e.currentTarget.value)}
 			>
 				{#each presets as preset}
@@ -176,7 +162,7 @@
 
 <style lang="scss">
 	.debug {
-		display: block;
+		display: none;
 	}
 	.layout {
 		width: 100%;
@@ -204,7 +190,6 @@
 			flex-direction: column;
 			gap: 0.2rem;
 
-			input,
 			select {
 				padding: 0.25rem;
 			}
