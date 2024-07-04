@@ -9,6 +9,7 @@
 	import { writable } from 'svelte/store';
 	import Monaco, { nativeThemes } from 'svelte-monaco';
 	import { globalSettings } from '../../global-settings.store';
+	import { toast } from 'svelte-sonner';
 
 	// constants
 	const languages: Language[] = [
@@ -75,6 +76,8 @@
 		globalSettings.codeEditor.deleteAllUserPresets();
 		// set default as active
 		handlePresetChange(deafultPresets[0].id);
+		// notify user
+		toast.success('Deleted all User Presets!');
 	}
 	function handleCreateUserPreset() {
 		// create new user preset
@@ -88,6 +91,9 @@
 		});
 		// set as active
 		handlePresetChange(newPreset.id);
+		// notify user
+		toast.success('User Preset created!');
+		toast.warning('Remember to push "global settings" to remote to avoid losing your presets');
 	}
 </script>
 
