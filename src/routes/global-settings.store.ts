@@ -1,10 +1,16 @@
 import { writable, get } from 'svelte/store';
+import {
+  type Preset as CodeEditor_UserPreset,
+} from "./tools/code-editor/+page.svelte";
 import { browser } from '$app/environment';
 
 
 export type GlobalSettings = {
   version: 1,
   settings: {
+    "code-editor": {
+      userPresets: CodeEditor_UserPreset[],
+    },
   };
 };
 
@@ -28,6 +34,9 @@ function createStore_GlobalSettings() {
   const state = writable<GlobalSettings>({
     version: 1,
     settings: {
+      "code-editor": {
+        userPresets: [],
+      },
     }
   });
 
@@ -42,11 +51,40 @@ function createStore_GlobalSettings() {
     if (browser) localStorage_globalSettings.write(s);
   });
 
+  // api for "code-editor" route
+  const codeEditor = {
+    deleteAllUserPresets() {
+      const newState = get(state);
+      newState.settings['code-editor'].userPresets = [];
+
+      state.set(newState);
+    },
+    createUserPreset(data: {
+      name: string,
+      code: string,
+      language: string,
+    }) {
+      // create new user preset
+      const newPreset: CodeEditor_UserPreset = {
+        id: crypto.randomUUID(),
+        ...data,
+      };
+      // save new user preset
+      const newState = get(state);
+      newState.settings['code-editor'].userPresets = [...newState.settings['code-editor'].userPresets, newPreset];
+
+      state.set(newState);
+
+      return newPreset;
+    },
+  };
+
 
 
   return {
     subscribe: state.subscribe,
     set: state.set,
+    codeEditor,
   };
 }
 
