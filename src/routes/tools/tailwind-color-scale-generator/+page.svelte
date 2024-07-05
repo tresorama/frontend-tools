@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import Monaco from 'svelte-monaco';
 	import { generateColorScale } from './utils/generate-color-scale';
+	import { convertJsToCssVariables } from './utils/convert-js-to-css-variables';
 
 	// ref DOM
 	let refForm: HTMLFormElement;
@@ -22,10 +23,12 @@
 			})
 		: null;
 
-	$: editorText =
+	$: editorTextJs =
 		formValues && generatedScale
 			? JSON.stringify({ [formValues.colorName]: generatedScale }, null, 2)
 			: null;
+
+	$: editorTextCss = formValues && editorTextJs ? convertJsToCssVariables(editorTextJs) : null;
 
 	// listeners
 	const handleFormChange = () => {
@@ -103,19 +106,36 @@
 		{/if}
 
 		<!-- Code Editor Output -->
-		{#if editorText}
-			<div class="editor-wrapper">
-				<Monaco
-					options={{
-						language: 'json',
-						automaticLayout: true,
-						readOnly: true
-					}}
-					theme="vs-dark"
-					value={editorText}
-				/>
-			</div>
-		{/if}
+		<div class="editors">
+			{#if editorTextJs}
+				<div class="editor-wrapper">
+					<Monaco
+						options={{
+							language: 'json',
+							automaticLayout: true,
+							readOnly: true,
+							minimap: { enabled: false }
+						}}
+						theme="vs-dark"
+						value={editorTextJs}
+					/>
+				</div>
+			{/if}
+			{#if editorTextCss}
+				<div class="editor-wrapper">
+					<Monaco
+						options={{
+							language: 'css',
+							automaticLayout: true,
+							readOnly: true,
+							minimap: { enabled: false }
+						}}
+						theme="vs-dark"
+						value={editorTextCss}
+					/>
+				</div>
+			{/if}
+		</div>
 	</section>
 </main>
 
@@ -240,10 +260,18 @@
 		background-color: var(--neutral-50);
 	}
 
-	.editor-wrapper {
-		height: 100%;
-		min-height: 30rem;
-		border-radius: var(--border-radius);
-		overflow: hidden;
+	.editors {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
+		.editor-wrapper {
+			flex: 1;
+			height: auto;
+			min-height: 20rem;
+			border-radius: var(--border-radius);
+			overflow: hidden;
+		}
 	}
 </style>
