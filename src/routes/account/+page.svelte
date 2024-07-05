@@ -6,6 +6,7 @@
 		globalSettings as localGlobalSettings,
 		type GlobalSettings
 	} from '../global-settings.store';
+	import { toast } from 'svelte-sonner';
 
 	// ==============================================================
 	// global settings
@@ -27,9 +28,8 @@
 
 		try {
 			remoteGlobalSettings = await globalSettingsQueries.getGlobalSettings();
-			alert('Fetched remote global settings');
 		} catch (error) {
-			alert('Erorr while fetching remote global settings');
+			toast.error('Erorr while fetching remote global settings');
 		}
 	}
 	async function handlePullGlobalSettings() {
@@ -42,10 +42,10 @@
 			$localGlobalSettings = _remoteGlobalSettings;
 
 			// notify success
-			alert('Remote state pulled to local! Success');
+			toast.success('Remote state pulled to local! Success');
 		} catch (error) {
 			// notify error
-			alert(
+			toast.error(
 				'Remote state pulled to local! Error\n' + (error instanceof Error ? error.message : '')
 			);
 		}
@@ -57,10 +57,10 @@
 			await globalSettingsQueries.saveGlobalSettings($localGlobalSettings);
 			await fetchRemoteGlobalSettings();
 			// notify success
-			alert('Local state pushed to remote! Success');
+			toast.success('Local state pushed to remote! Success');
 		} catch (error) {
 			// notify error
-			alert(
+			toast.error(
 				'Local state pushed to remote! Error\n' + (error instanceof Error ? error.message : '')
 			);
 		}
