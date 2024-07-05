@@ -1,7 +1,9 @@
 import { SvelteKitAuth } from "@auth/sveltekit";
 import GitHub from "@auth/sveltekit/providers/github";
+import { AUTH_TRUST_HOST } from '$env/static/private';
 
 export const { handle, signIn } = SvelteKitAuth({
+  trustHost: AUTH_TRUST_HOST === 'TRUE',
   providers: [GitHub({
     authorization: { params: { scope: "gist" } }
   })],
