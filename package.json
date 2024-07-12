@@ -13,7 +13,8 @@
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"postinstall": "cd tailwindcss-palette-generator && npm install && npm run tresorama:build"
+		"postinstall": "cd tailwindcss-palette-generator && npm install && npm run tresorama:build",
+    "test-production" :"rm -rf .svelte-kit && npm run build && npm run preview -- --port 5173"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
