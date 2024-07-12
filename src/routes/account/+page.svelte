@@ -24,15 +24,22 @@
 	// local state
 	let remoteGlobalSettings: GlobalSettings | null = null;
 	async function fetchRemoteGlobalSettings() {
-		if (!globalSettingsQueries) return;
+		if (!globalSettingsQueries) {
+			toast.info('Plaese login');
+			return;
+		}
+
+		toast.info('Fetching remote global settings...');
 
 		try {
 			remoteGlobalSettings = await globalSettingsQueries.getGlobalSettings();
+			toast.error('Succesfully fetched remote global settings');
 		} catch (error) {
 			toast.error('Erorr while fetching remote global settings');
 		}
 	}
 	async function handlePullGlobalSettings() {
+		toast.info('Pulling local state from remote...');
 		if (!globalSettingsQueries) return;
 
 		try {
@@ -51,6 +58,7 @@
 		}
 	}
 	async function handlePushGlobalSettings() {
+		toast.info('Pushing local state to remote...');
 		if (!globalSettingsQueries) return;
 
 		try {
