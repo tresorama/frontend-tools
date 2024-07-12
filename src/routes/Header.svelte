@@ -3,13 +3,14 @@
 	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
 	import HeaderAuth from './header-auth.svelte';
+	import { dev } from '$app/environment';
 
 	let menuIsOpen = false;
 
 	const navItems = [
 		{ url: '/', label: 'Home' },
 		{ url: '/about', label: 'about' },
-		{ url: '/tools', label: 'tools' }
+		...(!dev ? [] : [{ url: '/test', label: 'test' }])
 	];
 </script>
 
