@@ -10,6 +10,8 @@
 	const navItems = [
 		{ url: '/', label: 'Home' },
 		{ url: '/about', label: 'about' },
+		{ url: '/tools', label: 'tools' },
+		{ url: '/account', label: 'account' },
 		...(!dev ? [] : [{ url: '/test', label: 'test' }])
 	];
 </script>
