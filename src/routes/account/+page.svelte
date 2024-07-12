@@ -15,9 +15,16 @@
 	// api  client
 	let globalSettingsQueries: ReturnType<typeof createGlobalSettingsQueries> | null = null;
 	onMount(() => {
+		// if user is not logged abort...
+		if (!$page.data.session) return;
+
 		// TODO: add type to Session
-		// @ts-expect-error
-		const githubAccessToken = $page.data.session?.accessToken as string;
+		// @ts-expect-error Property 'accessToken' does not exist on type 'Session'.
+		const githubAccessToken = $page.data.session.accessToken as string | null | undefined;
+
+		// toast.info(`Github access token: ${githubAccessToken}`);
+		if (!githubAccessToken) return;
+
 		globalSettingsQueries = createGlobalSettingsQueries({ accessToken: githubAccessToken });
 	});
 
