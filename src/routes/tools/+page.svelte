@@ -3,7 +3,8 @@
 		{ slug: 'json-to-css-custom-properties' },
 		{ slug: 'tailwind-color-scale-generator' },
 		{ slug: 'css-color-palette-editor' },
-		{ slug: 'code-editor' }
+		{ slug: 'code-editor' },
+		{ slug: 'bricks-transform-json-for-nestable-api' }
 	];
 </script>
 

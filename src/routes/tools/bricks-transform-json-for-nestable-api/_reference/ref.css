@@ -1,0 +1,26 @@
+html {
+  font-size: 80%;
+}
+
+textarea {
+  width: 100%;
+}
+
+#alert:empty {
+  display: none;
+}
+
+#alert {
+  padding: 10px;
+  border: 1px solid;
+}
+
+#alert.success {
+  color: hsl(120 100 30);
+  background: hsl(120 100 90);
+}
+
+#alert.error {
+  color: hsl(0 100 30);
+  background: hsl(0 100 90);
+}
