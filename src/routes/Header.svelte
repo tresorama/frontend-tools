@@ -8,52 +8,66 @@
 	let menuIsOpen = false;
 
 	const navItems = [
-		{ url: '/', label: 'Home' },
-		{ url: '/about', label: 'about' },
-		{ url: '/tools', label: 'tools' },
-		{ url: '/account', label: 'account' },
-		...(!dev ? [] : [{ url: '/test', label: 'test' }])
+		{ url: '/', label: 'Home', isCurrent: $page.url.pathname === '/' },
+		{ url: '/about', label: 'about', isCurrent: $page.url.pathname.startsWith('/about') },
+		{ url: '/tools', label: 'tools', isCurrent: $page.url.pathname.startsWith('/tools') },
+		{ url: '/account', label: 'account', isCurrent: $page.url.pathname.startsWith('/account') },
+		...(!dev
+			? []
+			: [{ url: '/test', label: 'test', isCurrent: $page.url.pathname.startsWith('/test') }])
 	];
 </script>
 
-<header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div>
+<header class="header">
+	<div class="header__inner container">
+		<div class="corner">
+			<a href="https://kit.svelte.dev">
+				<img src={logo} alt="SvelteKit" />
+			</a>
+		</div>
 
-	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-			{#each navItems as item, i}
-				<li aria-current={$page.url.pathname === item.url ? 'page' : undefined}>
-					<a href={item.url}>{item.label}</a>
-				</li>
-			{/each}
-		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
+		<nav>
+			<svg viewBox="0 0 2 3" aria-hidden="true">
+				<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
+			</svg>
+			<ul>
+				{#each navItems as item, i}
+					<li aria-current={item.isCurrent}>
+						<a href={item.url}>{item.label}</a>
+					</li>
+				{/each}
+			</ul>
+			<svg viewBox="0 0 2 3" aria-hidden="true">
+				<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
+			</svg>
+		</nav>
 
-	<div class="corner auth">
-		<HeaderAuth />
+		<div class="corner auth">
+			<HeaderAuth />
+		</div>
 	</div>
 </header>
 
 <style lang="scss">
-	header {
+	.header {
+		--ctx--bg-color: var(--foreground);
+		--ctx--text-color: var(--background);
+		--ctx--text-hover-color: var(--secondary);
+		--ctx--accent-color: var(--secondary);
+
 		position: relative;
-		padding: 0 1rem;
-		display: flex;
-		justify-content: space-between;
+		padding: 0 var(--section-px);
+
+		&__inner {
+			display: flex;
+			justify-content: space-between;
+		}
 	}
 
 	.corner {
-		height: 3em;
+		height: 3.5em;
+		display: flex;
+		align-items: center;
 
 		a {
 			display: flex;
@@ -75,7 +89,6 @@
 		transform: translateX(-50%);
 		display: flex;
 		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
 	}
 
 	svg {
@@ -85,7 +98,7 @@
 	}
 
 	path {
-		fill: var(--background);
+		fill: var(--ctx--bg-color);
 	}
 
 	ul {
@@ -97,7 +110,8 @@
 		justify-content: center;
 		align-items: center;
 		list-style: none;
-		background: var(--background);
+		background: var(--ctx--bg-color);
+		color: var(--ctx--text-color);
 		background-size: contain;
 	}
 
@@ -106,7 +120,7 @@
 		height: 100%;
 	}
 
-	li[aria-current='page']::before {
+	li[aria-current='true']::before {
 		--size: 6px;
 		content: '';
 		width: 0;
@@ -115,15 +129,15 @@
 		top: 0;
 		left: calc(50% - var(--size));
 		border: var(--size) solid transparent;
-		border-top: var(--size) solid var(--color-theme-1);
+		border-top: var(--size) solid var(--ctx--accent-color);
 	}
 
 	nav a {
+		color: var(--ctx--text-color);
 		display: flex;
 		height: 100%;
 		align-items: center;
 		padding: 0 0.5rem;
-		color: var(--color-text);
 		font-weight: 700;
 		font-size: 0.8rem;
 		text-transform: uppercase;
@@ -132,6 +146,6 @@
 	}
 
 	a:hover {
-		color: var(--color-theme-1);
+		color: var(--ctx--text-hover-color);
 	}
 </style>

@@ -1,0 +1,28 @@
+@import './1-ds.css';
+@import './2-global-styles.css';
+@import './3-elements-text.css';
+@import './3-elements-input.css';
+@import './3-elements-button.css';
+@import './4-components-monaco-editor.css';
+@import './6-utility.css';
+
+.text-column {
+	display: flex;
+	max-width: 48rem;
+	flex: 0.6;
+	flex-direction: column;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+.visually-hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: auto;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
+}

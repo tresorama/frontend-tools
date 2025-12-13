@@ -79,10 +79,12 @@
 	<meta name="description" content={seo.description} />
 </svelte:head>
 
-<h1>{seo.title}</h1>
-<p>{seo.description}</p>
+<div class="intro container-sm">
+	<h1>{seo.title}</h1>
+	<p>{seo.description}</p>
+</div>
 
-<div class="layout">
+<div class="layout container-sm">
 	<div class="debug">
 		<pre>{JSON.stringify({ inputCode, outpuCode, status }, null, 2)}</pre>
 	</div>
@@ -158,11 +160,14 @@
 	.debug {
 		display: none;
 	}
+
+	.intro {
+		text-align: center;
+		p {
+			color: var(--muted-foreground);
+		}
+	}
 	.layout {
-		width: 100%;
-		max-width: 1300px;
-		margin-left: auto;
-		margin-right: auto;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		gap: 2rem;

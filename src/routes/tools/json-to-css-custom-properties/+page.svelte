@@ -45,7 +45,7 @@
 
 <h1>JSON to CSS Custom Properties</h1>
 
-<div class="layout">
+<div class="layout container-xs">
 	<div class="editor-wrapper source">
 		<!-- event.detail is the monaco instance. All options are reactive! -->
 		<Monaco
@@ -77,9 +77,6 @@
 <style lang="scss">
 	.layout {
 		width: 100%;
-		max-width: 1300px;
-		margin-left: auto;
-		margin-right: auto;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		grid-auto-rows: 33vh;

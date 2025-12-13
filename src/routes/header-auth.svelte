@@ -27,9 +27,8 @@
 	.header-auth {
 		position: relative;
 		display: flex;
-		gap: 0.4rem;
-		padding: 0.4rem 0;
 		align-items: center;
+		gap: 0.4rem;
 	}
 
 	.avatar {

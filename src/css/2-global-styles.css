@@ -1,0 +1,22 @@
+/* Global Styles */
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: var(--font-mono);
+	font-size: var(--text-base);
+	font-weight: 400;
+	line-height: var(--leading-normal);
+	letter-spacing: -0.01em;
+
+	color: var(--foreground);
+	background-attachment: fixed;
+	background-size: 100vw 100vh;
+	background: var(--site-background);
+}
+
+body {
+	min-height: 100vh;
+	margin: 0;
+}

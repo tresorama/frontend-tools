@@ -87,7 +87,7 @@
 
 <h1>CSS Color Palette Editor</h1>
 
-<div class="layout">
+<div class="layout container-sm">
 	<div class="editor-toolbar">
 		<div class="editor-preset-selector">
 			<label for="editor-preset">Preset</label>
@@ -115,10 +115,6 @@
 
 <style lang="scss">
 	.layout {
-		width: 100%;
-		max-width: 1300px;
-		margin-left: auto;
-		margin-right: auto;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		gap: 2rem;

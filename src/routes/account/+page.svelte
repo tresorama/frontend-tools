@@ -83,84 +83,92 @@
 	onMount(fetchRemoteGlobalSettings);
 </script>
 
-<main>
+<div>
 	<h1>Account</h1>
 	{#if !$page.data.session}
-		<p>Please login</p>
-	{:else}
-		<h2>Profile</h2>
-		<div class="user-details">
-			<span>Name</span>
-			<span>{$page.data.session.user?.name}</span>
-			<span>Email</span>
-			<span>{$page.data.session.user?.email}</span>
+		<div class="not-logged">
+			<p>Please login</p>
 		</div>
-		<h2>Settings</h2>
-		<div class="global-settings">
-			<div class="global-settings__preview">
-				<h3>Local</h3>
-				<pre>{JSON.stringify($localGlobalSettings, null, 2)}</pre>
+	{:else}
+		<div class="logged">
+			<h2>Profile</h2>
+			<div class="user-details">
+				<span>Name</span>
+				<span>{$page.data.session.user?.name}</span>
+				<span>Email</span>
+				<span>{$page.data.session.user?.email}</span>
 			</div>
-			<div class="global-settings__actions local">
-				<button on:click={handlePullGlobalSettings}>{'<<<'}</button>
-				<button on:click={handlePushGlobalSettings}>{'>>>'}</button>
-			</div>
-			<div class="global-settings__preview remote">
-				<h3>Remote</h3>
-				<div class="control">
-					<label for="storage-provider">Storage Provider</label>
-					<select id="storage-provider">
-						<option value="github-gist">Github Gist</option>
-					</select>
+			<h2>Settings</h2>
+			<div class="global-settings">
+				<div class="global-settings__preview">
+					<h3>Local</h3>
+					<pre>{JSON.stringify($localGlobalSettings, null, 2)}</pre>
 				</div>
-				<pre>{JSON.stringify(remoteGlobalSettings, null, 2)}</pre>
+				<div class="global-settings__actions local">
+					<button on:click={handlePullGlobalSettings}>{'<<<'}</button>
+					<button on:click={handlePushGlobalSettings}>{'>>>'}</button>
+				</div>
+				<div class="global-settings__preview remote">
+					<h3>Remote</h3>
+					<div class="control">
+						<label for="storage-provider">Storage Provider</label>
+						<select id="storage-provider">
+							<option value="github-gist">Github Gist</option>
+						</select>
+					</div>
+					<pre>{JSON.stringify(remoteGlobalSettings, null, 2)}</pre>
+				</div>
 			</div>
 		</div>
 	{/if}
-</main>
+</div>
 
 <style lang="scss">
-	h2 {
-		margin: 4rem 0 1rem;
-		&:first-of-type {
-			margin-top: 0;
+	.not-logged {
+		text-align: center;
+	}
+
+	.logged {
+		h2 {
+			&:first-of-type {
+				margin-top: 0;
+			}
 		}
-	}
-
-	.user-details {
-		display: grid;
-		grid-template-columns: minmax(5rem, auto) auto;
-		justify-content: start;
-	}
-
-	.global-settings {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-		gap: 0.5rem;
-		align-items: stretch;
-
-		&__preview {
+		.user-details {
 			display: grid;
-			grid-template-columns: auto auto;
-			justify-content: space-between;
-			grid-template-rows: auto minmax(0, 1fr);
-			h3 {
-				margin: 0;
-			}
-
-			pre {
-				grid-column: 1/-1;
-				border: solid;
-				font-size: 0.8rem;
-			}
+			grid-template-columns: minmax(5rem, auto) auto;
+			justify-content: start;
 		}
 
-		&__actions {
-			align-self: stretch;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			padding-top: 1rem;
+		.global-settings {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+			gap: 0.5rem;
+			align-items: stretch;
+
+			&__preview {
+				display: grid;
+				grid-template-columns: auto auto;
+				justify-content: space-between;
+				grid-template-rows: auto minmax(0, 1fr);
+				h3 {
+					margin: 0;
+				}
+
+				pre {
+					grid-column: 1/-1;
+					border: solid;
+					font-size: 0.8rem;
+				}
+			}
+
+			&__actions {
+				align-self: stretch;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				padding-top: 1rem;
+			}
 		}
 	}
 </style>

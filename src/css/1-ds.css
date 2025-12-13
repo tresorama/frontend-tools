@@ -1,0 +1,74 @@
+@import '@fontsource/ibm-plex-mono';
+
+/** Primitive - Colors */
+
+:root {
+	--background: white;
+	--foreground: black;
+	--muted: hsl(60, 5%, 50%);
+	--muted-foreground: hsl(60, 5%, 10%);
+	--primary: lime;
+	--primary-foreground: black;
+	--secondary: purple;
+	--secondary-foreground: white;
+}
+
+.dark {
+	color-scheme: dark;
+	--background: #090909;
+	--foreground: #d9d9d9;
+	--muted: hsl(0deg 0% 15.23%);
+	--muted-foreground: hsl(0deg 0% 51.79%);
+	--primary: #ffff24;
+	--primary-foreground: #191919;
+	--secondary: #ec1dff;
+	--secondary-foreground: #191919;
+}
+
+/* Primitive - Text */
+:root {
+	--font-sans: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--font-mono: 'IBM Plex Mono', monospace;
+
+	--text-xs: 0.65rem;
+	--text-sm: 0.75rem;
+	--text-base: 1rem;
+
+	--leading-none: 1;
+	--leading-tight: 1.2;
+	--leading-normal: 1.4;
+
+	--tracking-tighter: -0.04em;
+	--tracking-tight: -0.02em;
+	--tracking-normal: 0;
+}
+
+/* Semantic - Layout */
+
+:root {
+	--container-base: 1500px;
+	--section-px: 1rem;
+}
+
+/* Semantic - Color */
+
+:root {
+	--color-bg-0: #090909;
+	--color-bg-1: #000000;
+	--color-bg-2: #151515;
+	--color-bg-3: #ff000000;
+	--site-background: radial-gradient(130% 130% at 50% 50%, transparent, var(--color-bg-3)),
+		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 70%),
+		var(--color-bg-1);
+}
+
+.dark {
+	--color-bg-0: #090909;
+	--color-bg-1: #000000;
+	--color-bg-2: #151515;
+	--color-bg-3: #ff000000;
+	--site-background: radial-gradient(130% 130% at 50% 50%, transparent, var(--color-bg-3)),
+		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 70%),
+		var(--color-bg-1);
+}

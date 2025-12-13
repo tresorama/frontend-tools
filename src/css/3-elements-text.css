@@ -1,0 +1,40 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 400;
+	margin: 1.4em 0;
+}
+
+h1 {
+	font-size: 2rem;
+	text-align: center;
+}
+
+@media (min-width: 720px) {
+	h1 {
+		font-size: 2.4rem;
+	}
+}
+
+a {
+	color: var(--primary);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: var(--secondary);
+}
+
+pre {
+	font-family: var(--font-mono);
+	font-size: var(--text-sm);
+	background-color: var(--background);
+	color: var(--foreground);
+	overflow-x: auto;
+	min-height: 1.8rem;
+	padding: 1rem;
+}

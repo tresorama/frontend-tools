@@ -18,9 +18,7 @@
 	<ul>
 		{#each tools as tool}
 			<li>
-				<article>
-					<a href={`/tools/${tool.slug}`}>{tool.slug}</a>
-				</article>
+				<a href={`/tools/${tool.slug}`}>{tool.slug}</a>
 			</li>
 		{/each}
 	</ul>
@@ -28,6 +26,7 @@
 
 <style lang="scss">
 	ul {
+		list-style: none;
 		li {
 			margin-bottom: 0.5em;
 			font-size: 1.3rem;

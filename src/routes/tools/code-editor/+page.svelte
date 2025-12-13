@@ -107,7 +107,7 @@
 
 <h1>Code Editor - Monaco Editor - VS Code Like</h1>
 
-<div class="layout">
+<div class="layout container-sm">
 	<div class="debug">
 		<pre>{JSON.stringify({ languageSlug, theme, text, presetId }, null, 2)}</pre>
 	</div>
@@ -171,10 +171,6 @@
 		display: none;
 	}
 	.layout {
-		width: 100%;
-		max-width: 1300px;
-		margin-left: auto;
-		margin-right: auto;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		gap: 2rem;
@@ -195,20 +191,11 @@
 			display: flex;
 			flex-direction: column;
 			gap: 0.2rem;
-
-			select {
-				padding: 0.25rem;
-			}
 		}
 		.editor-preset-actions {
 			display: flex;
 			flex-direction: row;
 			gap: 1rem;
-
-			button {
-				padding: 0.25rem 0.5rem;
-				font-size: 0.8rem;
-			}
 		}
 	}
 </style>

@@ -60,7 +60,7 @@
 </svelte:head>
 <h1>Tailwind Color Scale Generator</h1>
 
-<main class="layout">
+<main class="layout container-sm">
 	<section class="left-side">
 		<!-- Form -->
 		<form bind:this={refForm} on:submit|preventDefault on:input={handleFormChange}>
@@ -140,29 +140,11 @@
 </main>
 
 <style lang="scss">
-	:root {
-		--border-radius: 5px;
-		--neutral-50: #fafafa;
-		--neutral-100: #f2f2f2;
-		--neutral-200: #e6e6e6;
-		--neutral-300: #d1d1d1;
-		--neutral-400: #949494;
-		--neutral-500: #757575;
-		--neutral-600: #545454;
-		--neutral-700: #3d3d3d;
-		--neutral-800: #242424;
-		--neutral-900: #121212;
-		--neutral-950: #0a0a0a;
-	}
 	.layout {
-		width: 100%;
-		max-width: 1300px;
-		margin-left: auto;
-		margin-right: auto;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		gap: 1rem;
-		color: var(--neutral-900);
+		color: var(--muted-foreground);
 
 		@media (min-width: 55rem) {
 			grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
@@ -180,7 +162,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2rem;
-		background-color: var(--neutral-50);
+		background-color: var(--background);
 		border-radius: var(--border-radius);
 
 		// Field wrapper
@@ -200,32 +182,11 @@
 			}
 		}
 
-		// Field label
-		label {
-			font-weight: 900;
-			font-size: 0.7rem;
-			line-height: 1.35;
-			color: var(--neutral-800);
-		}
-
 		// Field helper text
 		span {
-			font-size: 0.7rem;
+			font-size: var(--text-sm);
 			font-style: italic;
-			color: var(--neutral-400);
-		}
-
-		// Field input
-		input[type='text'] {
-			display: block;
-			padding: 0.5em;
-			border: none;
-			background-color: var(--neutral-200);
-			border-radius: var(--border-radius);
-			border: 1px solid var(--neutral-500);
-		}
-		input[type='checkbox'] {
-			transform: scale(1.8);
+			color: var(--muted-foreground);
 		}
 	}
 
@@ -237,19 +198,23 @@
 		.color-swatch {
 			/* Public Prop */
 			--color: transparent;
+			position: relative;
 
 			&__label {
+				position: absolute;
+				top: 0;
+				left: 0;
 				display: block;
-				font-size: 0.7rem;
-				font-weight: 700;
-				color: var(--neutral-600);
-				line-height: 1.75;
+				padding: 0.4em 0.6em;
+				background: color-mix(in srgb, transparent, var(--background) 95%);
+				color: var(--muted-foreground);
+				font-size: var(--text-xs);
+				line-height: var(--leading-none);
 			}
 			&__box {
 				display: block;
 				height: 40px;
 				background-color: var(--color);
-				border-radius: var(--border-radius);
 			}
 		}
 	}
@@ -257,7 +222,7 @@
 	.debug {
 		margin: 0;
 		color: var(--neutral-400);
-		background-color: var(--neutral-50);
+		background-color: var(--background);
 	}
 
 	.editors {
@@ -270,8 +235,6 @@
 			flex: 1;
 			height: auto;
 			min-height: 20rem;
-			border-radius: var(--border-radius);
-			overflow: hidden;
 		}
 	}
 </style>
