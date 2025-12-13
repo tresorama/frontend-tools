@@ -1,37 +1,11 @@
-<script>
-  import { onMount } from 'svelte';
-
-  let counter = 0;
-  function increment() {
-    counter++;
-  }
-  function decrement() {
-    counter--;
-  }
-  function resetCounter() {
-    counter = 0;
-  }
-  onMount(resetCounter);
+<script lang="ts">
+  import Counter from './counter.svelte';
 </script>
 
 <svelte:head>
-  <title>Home</title>
-  <meta name="description" content="Svelte demo app" />
+  <title>Test</title>
+  <meta name="description" content="Test Page" />
 </svelte:head>
 
-<section>
-  <p>Counter: {counter}</p>
-  <button type="button" on:click={increment}>increment</button>
-  <button type="button" on:click={decrement}>decrement</button>
-  <button type="button" on:click={resetCounter}>resetCounter</button>
-</section>
-
-<style>
-  section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex: 0.6;
-  }
-</style>
+<h1>Test</h1>
+<Counter />
