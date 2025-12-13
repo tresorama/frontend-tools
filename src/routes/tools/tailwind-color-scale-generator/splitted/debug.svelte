@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { store_colorScale } from './store-color-scale';
+  import { store_colorScale } from './store-color-scale';
 </script>
 
 <pre class="debug">
@@ -7,7 +7,7 @@
 </pre>
 
 <style lang="scss">
-	.debug {
-		margin: 0;
-	}
+  .debug {
+    margin: 0;
+  }
 </style>

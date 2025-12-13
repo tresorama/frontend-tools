@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Monaco from 'svelte-monaco';
+  import Monaco from 'svelte-monaco';
 
-	// Presets
-	type PresetSlug = (typeof presetsSlugs)[number];
-	const presetsSlugs = ['1', '2'] as const;
-	const presetsStartingText: Record<PresetSlug, string> = {
-		'1': `:root {
+  // Presets
+  type PresetSlug = (typeof presetsSlugs)[number];
+  const presetsSlugs = ['1', '2'] as const;
+  const presetsStartingText: Record<PresetSlug, string> = {
+    '1': `:root {
   --sl--color-surface-hue: 183;
   --sl--color-surface-sat: 100%;
   
@@ -46,7 +46,7 @@
   --sl--color-surface-950--L: hsl(var(--sl--color-surface-hue), var(--sl--color-surface-sat), 4.7%);
 
 }`,
-		'2': `:root {
+    '2': `:root {
   --st--color-primary-50: var(--tw--color-indigo-50); 
   --st--color-primary-100: var(--tw--color-indigo-100); 
   --st--color-primary-200: var(--tw--color-indigo-200); 
@@ -71,68 +71,68 @@
   --st--color-secondary-900: var(--tw--color-yellow-900); 
   --st--color-secondary-950: var(--tw--color-yellow-950); 
 }`
-	};
+  };
 
-	let presetSlug: PresetSlug = presetsSlugs[0];
-	$: editorValue = presetsStartingText[presetSlug];
+  let presetSlug: PresetSlug = presetsSlugs[0];
+  $: editorValue = presetsStartingText[presetSlug];
 </script>
 
 <svelte:head>
-	<title>CSS Color Palette Editor</title>
-	<meta
-		name="description"
-		content="Online tool to create a CSS color palette using VS Code editor keybindings"
-	/>
+  <title>CSS Color Palette Editor</title>
+  <meta
+    name="description"
+    content="Online tool to create a CSS color palette using VS Code editor keybindings"
+  />
 </svelte:head>
 
 <h1>CSS Color Palette Editor</h1>
 
 <div class="layout container-sm">
-	<div class="editor-toolbar">
-		<div class="editor-preset-selector">
-			<label for="editor-preset">Preset</label>
-			<select id="editor-preset" bind:value={presetSlug}>
-				{#each presetsSlugs as slug}
-					<option value={slug}>{slug}</option>
-				{/each}
-			</select>
-		</div>
-	</div>
-	<div class="editor-wrapper dest">
-		<!-- event.detail is the monaco instance. All options are reactive! -->
-		<Monaco
-			options={{
-				language: 'css',
-				automaticLayout: true
-				// readOnly: true
-			}}
-			theme="vs-dark"
-			on:ready={(event) => console.log(event.detail)}
-			bind:value={editorValue}
-		/>
-	</div>
+  <div class="editor-toolbar">
+    <div class="editor-preset-selector">
+      <label for="editor-preset">Preset</label>
+      <select id="editor-preset" bind:value={presetSlug}>
+        {#each presetsSlugs as slug}
+          <option value={slug}>{slug}</option>
+        {/each}
+      </select>
+    </div>
+  </div>
+  <div class="editor-wrapper dest">
+    <!-- event.detail is the monaco instance. All options are reactive! -->
+    <Monaco
+      options={{
+        language: 'css',
+        automaticLayout: true
+        // readOnly: true
+      }}
+      theme="vs-dark"
+      on:ready={(event) => console.log(event.detail)}
+      bind:value={editorValue}
+    />
+  </div>
 </div>
 
 <style lang="scss">
-	.layout {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr);
-		gap: 2rem;
-	}
-	.editor-wrapper {
-		height: 33vh;
-		@media (min-width: 55rem) {
-			height: 75vh;
-		}
-	}
-	.editor-toolbar {
-		display: flex;
-		flex-direction: row;
-		gap: 1rem;
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+  .editor-wrapper {
+    height: 33vh;
+    @media (min-width: 55rem) {
+      height: 75vh;
+    }
+  }
+  .editor-toolbar {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 
-		> * {
-			display: flex;
-			flex-direction: column;
-		}
-	}
+    > * {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 </style>

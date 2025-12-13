@@ -1,25 +1,25 @@
 button {
-	--button-bg: color-mix(in srgb, var(--muted) 90%, var(--foreground));
-	--button-text: var(--foreground);
-	--button-border: color-mix(in srgb, var(--muted), var(--muted-foreground));
-	--button-hover-bg: color-mix(in srgb, var(--muted) 70%, var(--foreground));
+  --button-bg: color-mix(in srgb, var(--muted) 90%, var(--foreground));
+  --button-text: var(--foreground);
+  --button-border: color-mix(in srgb, var(--muted), var(--muted-foreground));
+  --button-hover-bg: color-mix(in srgb, var(--muted) 70%, var(--foreground));
 
-	cursor: pointer;
+  cursor: pointer;
 
-	min-height: 1.8rem;
-	padding: 0.2rem 1.5rem;
+  min-height: 1.8rem;
+  padding: 0.2rem 1.5rem;
 
-	background-color: var(--button-bg);
-	color: var(--button-text);
-	border: none;
-	box-shadow: 0px 0px 0px 1px var(--button-border);
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  box-shadow: 0px 0px 0px 1px var(--button-border);
 
-	font: inherit;
-	font-size: var(--text-sm);
-	font-weight: 200;
-	letter-spacing: var(--tracking-tight);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 200;
+  letter-spacing: var(--tracking-tight);
 }
 
 button:hover {
-	background-color: var(--button-hover-bg);
+  background-color: var(--button-hover-bg);
 }

@@ -1,20 +1,20 @@
 .container {
-	--container-max-width: var(--container-base);
-	width: 100%;
-	max-width: var(--container-max-width);
-	margin: 0 auto;
+  --container-max-width: var(--container-base);
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
 }
 
 .container-sm {
-	--container-max-width: calc(0.86 * var(--container-base));
-	width: 100%;
-	max-width: var(--container-max-width);
-	margin: 0 auto;
+  --container-max-width: calc(0.86 * var(--container-base));
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
 }
 
 .container-xs {
-	--container-max-width: calc(0.8 * var(--container-base));
-	width: 100%;
-	max-width: var(--container-max-width);
-	margin: 0 auto;
+  --container-max-width: calc(0.8 * var(--container-base));
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
 }
