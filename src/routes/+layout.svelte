@@ -1,6 +1,6 @@
 <script>
 	import { Toaster } from 'svelte-sonner';
-	import Header from './Header.svelte';
+	import Header from './_layout-components/Header.svelte';
 	import '../css/styles.css';
 </script>
 

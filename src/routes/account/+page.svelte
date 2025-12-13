@@ -5,7 +5,7 @@
 	import {
 		globalSettings as localGlobalSettings,
 		type GlobalSettings
-	} from '../global-settings.store';
+	} from '../_state/global-settings.store';
 	import { toast } from 'svelte-sonner';
 
 	// ==============================================================

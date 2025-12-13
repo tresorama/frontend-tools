@@ -1,4 +1,4 @@
-import type { GlobalSettings } from "../global-settings.store";
+import type { GlobalSettings } from "../_state/global-settings.store";
 import { createGithubClient } from "./github.queries";
 
 type GithubAccessToken = string;

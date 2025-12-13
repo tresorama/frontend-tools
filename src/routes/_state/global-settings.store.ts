@@ -1,7 +1,7 @@
 import { writable, get } from 'svelte/store';
 import {
   type Preset as CodeEditor_UserPreset,
-} from "./tools/code-editor/+page.svelte";
+} from "../tools/code-editor/+page.svelte";
 import { browser } from '$app/environment';
 
 

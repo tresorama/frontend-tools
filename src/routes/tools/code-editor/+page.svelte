@@ -8,7 +8,7 @@
 <script lang="ts">
 	import { writable } from 'svelte/store';
 	import Monaco, { nativeThemes } from 'svelte-monaco';
-	import { globalSettings } from '../../global-settings.store';
+	import { globalSettings } from '../../_state/global-settings.store';
 	import { toast } from 'svelte-sonner';
 
 	// constants
