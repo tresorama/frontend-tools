@@ -7,7 +7,7 @@
 
 	let menuIsOpen = false;
 
-	const navItems = [
+	$: navItems = [
 		{ url: '/', label: 'Home', isCurrent: $page.url.pathname === '/' },
 		{ url: '/about', label: 'about', isCurrent: $page.url.pathname.startsWith('/about') },
 		{ url: '/tools', label: 'tools', isCurrent: $page.url.pathname.startsWith('/tools') },
