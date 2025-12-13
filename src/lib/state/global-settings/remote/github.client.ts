@@ -26,6 +26,7 @@ export const createGithubClient = (accessToken: string) => {
     gist: {
       getAllMyGists: async (): Promise<Gist[]> => {
         return fetch('https://api.github.com/gists', {
+          cache: 'no-store',
           headers: {
             Authorization: `Bearer ${accessToken}`,
             'X-GitHub-Api-Version': '2022-11-28'
@@ -33,7 +34,9 @@ export const createGithubClient = (accessToken: string) => {
         }).then((r) => r.json());
       },
       getGistById: async (gistId: Gist['id']): Promise<Gist> => {
-        return fetch(`https://api.github.com/gists/${gistId}`).then(r => r.json());
+        return fetch(`https://api.github.com/gists/${gistId}`, {
+          cache: 'no-store',
+        }).then(r => r.json());
       },
       createGist: async (data: Omit<Gist, "id">): Promise<Gist> => {
         return fetch('https://api.github.com/gists', {

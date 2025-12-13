@@ -8,8 +8,9 @@
 <script lang="ts">
   import { writable } from 'svelte/store';
   import Monaco, { nativeThemes } from 'svelte-monaco';
-  import { globalSettings } from '../../_state/global-settings.store';
   import { toast } from 'svelte-sonner';
+
+  import { globalSettingsLocal } from '$lib/state/global-settings/local/store';
 
   // constants
   const languages: Language[] = [
@@ -53,7 +54,7 @@
   let languageSlug = 'javascript';
   let theme = 'vs-dark';
   let text = 'hey';
-  $: userPresets = $globalSettings.settings['code-editor'].userPresets;
+  $: userPresets = $globalSettingsLocal.settings['code-editor'].userPresets;
   let presets = [...deafultPresets];
   $: presets = [...deafultPresets, ...userPresets];
   const presetId = writable(presets[0].id);
@@ -73,7 +74,7 @@
     const userIsSure = confirm('Are you sure you want to delete all presets?');
     if (!userIsSure) return;
     // delete all user presets
-    globalSettings.codeEditor.deleteAllUserPresets();
+    globalSettingsLocal.api.codeEditor.deleteAllUserPresets();
     // set default as active
     handlePresetChange(deafultPresets[0].id);
     // notify user
@@ -84,7 +85,7 @@
     const name = prompt(`Preset name:`);
     if (!name) return;
     // save new user preset
-    const newPreset = globalSettings.codeEditor.createUserPreset({
+    const newPreset = globalSettingsLocal.api.codeEditor.createUserPreset({
       name,
       code: text,
       language: languageSlug
